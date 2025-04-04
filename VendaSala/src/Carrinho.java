@@ -8,6 +8,10 @@ public class Carrinho {
         itens = new ArrayList<>();
     }
 
+    public List<Produto> getItens(){
+        return itens;
+    }
+
     public void adicionarProduto(Produto p){
         itens.add(p);
         System.out.println("Produto adicionado");

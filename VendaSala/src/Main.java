@@ -21,6 +21,24 @@ public class Main {
                 case 1:
                     adicionarProdutoMenu(sc, carrinho);
                     break;
+                case 2:
+                    removerProdutoMenu(sc, carrinho);
+                    break;
+                case 3:
+                    carrinho.listarItens();
+                    break;
+                case 4:
+                    aplicarDescontoMenu(sc, carrinho);
+                    break;
+                case 5:
+                    double total = carrinho.calcularTotal();
+                    System.out.println("Valor total do carrinho: R$ " + total);
+                    break;
+                case 0:
+                    System.out.println("Saindo do sistema...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente");
             }
         }
     }
@@ -44,17 +62,53 @@ public class Main {
             case 1:
                 System.out.println("Digite a marca do eletronico: ");
                 String marca = sc.nextLine();
+                Eletronico e = new Eletronico(nome, preco, marca);
+                carrinho.adicionarProduto(e);
                 break;
             case 2:
                 System.out.println("Digite o tamanho da roupa: ");
                 String tamanho = sc.nextLine();
+                Roupa r = new Roupa(nome, preco, tamanho);
+                carrinho.adicionarProduto(r);
                 break;
             case 3:
                 System.out.println("Digite o autor do livro: ");
                 String autor = sc.nextLine();
+                Livro l = new Livro(nome,preco,autor);
+                carrinho.adicionarProduto(l);
                 break;
             default:
                 System.out.println("Tipo invalido, produto nao adicionado");
         }
     }
+
+    private static void removerProdutoMenu(Scanner sc, Carrinho carrinho){
+        System.out.println("\n-- Remover produto --");
+        System.out.println("Digite o nome do item: ");
+        String nomeRemover = sc.nextLine();
+
+        Produto produtoEncontrado = null;
+
+        for(Produto p : carrinho.getItens()){
+            if(p.getNome().equalsIgnoreCase(nomeRemover)){
+                produtoEncontrado = p;
+                break;
+            }
+        }
+
+        if(produtoEncontrado != null){
+            carrinho.removerProduto(produtoEncontrado);
+        }else{
+            System.out.println("Produto nao encontrado");
+        }
+    }
+
+    private static void aplicarDescontoMenu(Scanner sc, Carrinho carrinho){
+        System.out.println("\n-- Aplicar Desconto --");
+        System.out.println("Digite a porcentagem de desconto: ");
+        double porcentagem = Double.parseDouble(sc.nextLine());
+
+        carrinho.aplicarDescontoEmPromocionais(porcentagem / 100);
+    }
+
 }
